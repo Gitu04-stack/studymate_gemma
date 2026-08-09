@@ -4,10 +4,15 @@ import os
 
 app = Flask(__name__, static_folder="static")
 
-# Gemini API client
-client = genai.Client(
-    api_key=os.environ.get("GEMINI_API_KEY")
-)
+MODEL_NAME = "gemma-4-26b-a4b-it"
+
+api_key = os.environ.get("GOOGLE_API_KEY")
+
+if not api_key:
+    raise RuntimeError("GOOGLE_API_KEY is not configured")
+
+client = genai.Client(api_key=api_key)
+
 
 @app.route("/")
 def home():
@@ -15,26 +20,27 @@ def home():
 
 
 @app.route("/api/ask", methods=["POST"])
-def ask_gemini():
+def ask_gemma():
     try:
-        data = request.get_json()
+        data = request.get_json(silent=True) or {}
         user_message = data.get("message", "").strip()
 
         if not user_message:
-            return jsonify({"error": "Please enter a message."}), 400
+            return jsonify({"error": "Please enter a question."}), 400
 
         response = client.models.generate_content(
-            model="gemma-3-27b-it",
+            model=MODEL_NAME,
             contents=user_message
         )
 
         return jsonify({
-            "response": response.text
+            "answer": response.text
         })
 
     except Exception as e:
+        print("Gemma error:", e)
         return jsonify({
-            "error": str(e)
+            "error": "Gemma could not generate a response."
         }), 500
 
 
