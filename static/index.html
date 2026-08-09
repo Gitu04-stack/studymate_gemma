@@ -1,205 +1,314 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudyMate - AI Study Assistant</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<title>StudyMate | AI Study Assistant</title>
 
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #eef2ff, #f8fafc);
-            min-height: 100vh;
-            padding: 30px 15px;
-            color: #1e293b;
-        }
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-        .container {
-            max-width: 850px;
-            margin: auto;
-        }
+body {
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #eef2ff, #f8fafc);
+    color: #1e293b;
+    padding: 25px 15px;
+}
 
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+.container {
+    max-width: 900px;
+    margin: auto;
+}
 
-        .logo {
-            font-size: 48px;
-            margin-bottom: 10px;
-        }
+header {
+    text-align: center;
+    margin-bottom: 25px;
+}
 
-        h1 {
-            font-size: 36px;
-            margin-bottom: 8px;
-        }
+.logo {
+    font-size: 52px;
+}
 
-        .subtitle {
-            color: #64748b;
-            font-size: 17px;
-        }
+h1 {
+    font-size: 38px;
+    margin: 8px 0;
+}
 
-        .card {
-            background: white;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            margin-bottom: 20px;
-        }
+.subtitle {
+    color: #64748b;
+    font-size: 16px;
+}
 
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
+.badge {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: #e0e7ff;
+    color: #4338ca;
+    font-size: 13px;
+    font-weight: bold;
+}
 
-        textarea {
-            width: 100%;
-            min-height: 150px;
-            padding: 15px;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            resize: vertical;
-            font-size: 16px;
-            font-family: inherit;
-            outline: none;
-        }
+.card {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+}
 
-        textarea:focus {
-            border-color: #6366f1;
-        }
+h2 {
+    margin-bottom: 18px;
+}
 
-        button {
-            width: 100%;
-            margin-top: 15px;
-            padding: 14px;
-            border: none;
-            border-radius: 12px;
-            background: #4f46e5;
-            color: white;
-            font-size: 17px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
 
-        button:hover {
-            background: #4338ca;
-        }
+select,
+textarea {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: inherit;
+    outline: none;
+}
 
-        button:disabled {
-            background: #94a3b8;
-            cursor: not-allowed;
-        }
+select {
+    margin-bottom: 15px;
+}
 
-        .answer {
-            white-space: pre-wrap;
-            line-height: 1.7;
-            color: #334155;
-        }
+textarea {
+    min-height: 150px;
+    resize: vertical;
+}
 
-        .loading {
-            display: none;
-            text-align: center;
-            color: #6366f1;
-            margin-top: 15px;
-        }
+select:focus,
+textarea:focus {
+    border-color: #6366f1;
+}
 
-        .examples {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 15px;
-        }
+button {
+    width: 100%;
+    margin-top: 15px;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: #4f46e5;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
 
-        .example {
-            width: auto;
-            margin: 0;
-            padding: 8px 12px;
-            background: #eef2ff;
-            color: #4338ca;
-            font-size: 13px;
-        }
+button:hover {
+    background: #4338ca;
+}
 
-        .example:hover {
-            background: #e0e7ff;
-        }
+button:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+}
 
-        footer {
-            text-align: center;
-            color: #64748b;
-            font-size: 13px;
-            margin-top: 20px;
-        }
-    </style>
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.quick-actions button {
+    margin: 0;
+    background: #eef2ff;
+    color: #4338ca;
+    font-size: 13px;
+}
+
+.quick-actions button:hover {
+    background: #e0e7ff;
+}
+
+.answer {
+    white-space: pre-wrap;
+    line-height: 1.7;
+    color: #334155;
+    min-height: 80px;
+}
+
+.loading {
+    display: none;
+    text-align: center;
+    margin-top: 15px;
+    color: #4f46e5;
+    font-weight: bold;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.feature {
+    text-align: center;
+    padding: 15px;
+    background: #f8fafc;
+    border-radius: 12px;
+}
+
+.feature-icon {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.feature h3 {
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+
+.feature p {
+    font-size: 12px;
+    color: #64748b;
+}
+
+footer {
+    text-align: center;
+    color: #64748b;
+    font-size: 13px;
+    padding: 10px;
+}
+
+@media (max-width: 650px) {
+    .quick-actions,
+    .features {
+        grid-template-columns: 1fr;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+}
+</style>
 </head>
 
 <body>
 
 <div class="container">
 
-    <header>
-        <div class="logo">📚</div>
-        <h1>StudyMate</h1>
-        <p class="subtitle">
-            Your AI-powered study assistant
-        </p>
-    </header>
+<header>
+    <div class="logo">📚</div>
+    <h1>StudyMate</h1>
+    <p class="subtitle">
+        Your AI-powered study companion
+    </p>
+    <span class="badge">Powered by Gemma</span>
+</header>
 
-    <div class="card">
+<div class="card">
 
-        <label for="question">
-            What do you want to learn?
-        </label>
+<h2>🎯 What do you want to study?</h2>
 
-        <textarea
-            id="question"
-            placeholder="Example: Explain polymorphism in C# with a simple example..."
-        ></textarea>
+<label for="mode">Choose a study mode</label>
 
-        <div class="examples">
-            <button class="example"
-                onclick="setQuestion('Explain polymorphism in C# with a simple example.')">
-                C# Polymorphism
-            </button>
+<select id="mode">
+    <option value="explain">📖 Explain a Topic</option>
+    <option value="quiz">❓ Generate a Quiz</option>
+    <option value="summary">📝 Summarize Notes</option>
+    <option value="ask">💬 Ask a Question</option>
+</select>
 
-            <button class="example"
-                onclick="setQuestion('Create 5 MCQs about database normalization.')">
-                DBMS Quiz
-            </button>
+<label for="difficulty">Difficulty</label>
 
-            <button class="example"
-                onclick="setQuestion('Explain recursion in simple words with an example.')">
-                Recursion
-            </button>
-        </div>
+<select id="difficulty">
+    <option>Beginner</option>
+    <option>Intermediate</option>
+    <option>Advanced</option>
+</select>
 
-        <button id="askButton" onclick="askGemma()">
-            ✨ Ask StudyMate
-        </button>
+<label for="question">Your input</label>
 
-        <div id="loading" class="loading">
-            Gemma is thinking... ⏳
-        </div>
+<textarea id="question"
+placeholder="Example: Explain polymorphism in C# with a simple example..."></textarea>
 
-    </div>
+<div class="quick-actions">
 
-    <div class="card">
-        <h2>💡 StudyMate's Answer</h2>
-        <br>
-        <div id="answer" class="answer">
-            Your answer will appear here.
-        </div>
-    </div>
+<button onclick="setQuestion('Explain polymorphism in C# with a simple example.')">
+C# Polymorphism
+</button>
 
-    <footer>
-        Powered by Gemma • StudyMate
-    </footer>
+<button onclick="setQuestion('Create 5 MCQs about database normalization.')">
+DBMS Quiz
+</button>
+
+<button onclick="setQuestion('Explain recursion in simple words with an example.')">
+Recursion
+</button>
+
+</div>
+
+<button id="askButton" onclick="askGemma()">
+✨ Ask StudyMate
+</button>
+
+<div id="loading" class="loading">
+Gemma is thinking... ⏳
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>💡 StudyMate's Answer</h2>
+
+<div id="answer" class="answer">
+Your answer will appear here.
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>🌟 What StudyMate Can Do</h2>
+
+<div class="features">
+
+<div class="feature">
+<div class="feature-icon">📖</div>
+<h3>Explain</h3>
+<p>Understand difficult topics in simple language.</p>
+</div>
+
+<div class="feature">
+<div class="feature-icon">❓</div>
+<h3>Quiz</h3>
+<p>Practice with AI-generated questions.</p>
+</div>
+
+<div class="feature">
+<div class="feature-icon">📝</div>
+<h3>Summarize</h3>
+<p>Turn long notes into useful summaries.</p>
+</div>
+
+</div>
+
+</div>
+
+<footer>
+StudyMate • Built with Gemma
+</footer>
 
 </div>
 
@@ -211,13 +320,27 @@ function setQuestion(text) {
 
 async function askGemma() {
 
-    const question = document.getElementById("question").value.trim();
-    const answer = document.getElementById("answer");
-    const button = document.getElementById("askButton");
-    const loading = document.getElementById("loading");
+    const question =
+        document.getElementById("question").value.trim();
+
+    const mode =
+        document.getElementById("mode").value;
+
+    const difficulty =
+        document.getElementById("difficulty").value;
+
+    const answer =
+        document.getElementById("answer");
+
+    const button =
+        document.getElementById("askButton");
+
+    const loading =
+        document.getElementById("loading");
 
     if (!question) {
-        answer.textContent = "Please enter a question first.";
+        answer.textContent =
+            "Please enter a topic or question first.";
         return;
     }
 
@@ -233,24 +356,31 @@ async function askGemma() {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                message: question
+                message:
+                    `Study mode: ${mode}
+Difficulty: ${difficulty}
+
+User input:
+${question}`
             })
         });
 
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(data.error || "Something went wrong.");
+            throw new Error(
+                data.error || "Something went wrong."
+            );
         }
 
         answer.textContent = data.answer;
 
     } catch (error) {
 
+        console.error(error);
+
         answer.textContent =
             "Sorry, something went wrong. Please try again.";
-
-        console.error(error);
 
     } finally {
 
