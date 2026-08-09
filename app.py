@@ -6,10 +6,10 @@ app = Flask(__name__, static_folder="static")
 
 MODEL_NAME = "gemma-4-26b-a4b-it"
 
-api_key = os.environ.get("GOOGLE_API_KEY")
+api_key = os.environ.get("GEMINI_API_KEY")
 
 if not api_key:
-    raise RuntimeError("GOOGLE_API_KEY is not configured")
+    raise RuntimeError("GEMINI_API_KEY is not configured")
 
 client = genai.Client(api_key=api_key)
 
